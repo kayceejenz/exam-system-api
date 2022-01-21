@@ -8,11 +8,11 @@ class AssessmentService{
     }
 
     async getAll(){
-        return await Assessment.find({},{__v:0,createdAt:0,updatedAt:0});
+        return await Assessment.find({},{__v:0,createdAt:0,updatedAt:0}).populate("questionBank","description");
     }
 
     async getOne(assessmentId){
-        const assessment = await Assessment.findOne({_id : assessmentId},{__v:0,createdAt:0,updatedAt:0});
+        const assessment = await Assessment.findOne({_id : assessmentId},{__v:0,createdAt:0,updatedAt:0}).populate("questionBank","description");
         if(!assessment) throw new CustomError("Assessment not found",404);
         
         return assessment;

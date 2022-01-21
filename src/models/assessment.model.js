@@ -28,7 +28,11 @@ const assessmentSchema = mongoose.Schema({
     dateTime:{
         type: Date,
         required: true
-    }
+    },
+    questionBank:[{
+        type:  mongoose.Schema.Types.ObjectId,
+        ref: 'questionCategory',
+    }]
 },
 {
     timestamps: true
