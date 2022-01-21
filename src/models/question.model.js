@@ -4,7 +4,7 @@ const questionTypes = require("./enums/questionType.enum");
 const questionSchema = mongoose.Schema({
     category:{
         type:  mongoose.Schema.Types.ObjectId,
-        ref: 'questionCateogry',
+        ref: 'questionCategory',
         required: true
     },
     type:{
@@ -31,4 +31,4 @@ const questionSchema = mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.Model("question",questionSchema);
+module.exports = mongoose.model("question",questionSchema);
