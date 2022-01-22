@@ -20,9 +20,6 @@ const userSchema = new Schema(
     password: {
       type: String,
     },
-    image: {
-      type: String,
-    },
     role: {
       type: String,
       trim: true,
@@ -35,7 +32,7 @@ const userSchema = new Schema(
     },
     isVerified: {
       type: Boolean,
-      default: false,
+      default: true,
     }
   },
   {
