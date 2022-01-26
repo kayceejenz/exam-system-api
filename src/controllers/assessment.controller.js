@@ -1,4 +1,6 @@
 const AssessmentServ = require("../services/assessment.service");
+const UserAssessmentServ = require("../services/user-assessment.service");
+
 const response = require("../utils/response");
 
 class AssessmentController{
@@ -25,6 +27,11 @@ class AssessmentController{
     async delete(req,res){
         const result = await AssessmentServ.delete(req.params.assessmentId);
         res.status(201).send(response("Assessment deleted successfully",result));
+    }
+
+    async prepareAssessmentForUser(req,res){
+        const result = await UserAssessmentServ.prepareAssessment(req.params);
+        res.status(201).send(response("User assessment prepared successfully.",result));
     }
 }
 

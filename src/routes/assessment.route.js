@@ -7,7 +7,7 @@ router.get("/", AssessmentCtrl.getAll);
 router.get("/:assessmentId",AssessmentCtrl.getOne)
 router.put("/update/:assessmentId", AssessmentCtrl.update);
 router.delete("/delete/:assessmentId", AssessmentCtrl.delete);
-
+router.get("/prepare/:userId/:assessmentId",AssessmentCtrl.prepareAssessmentForUser);
 
 
 module.exports = router;
