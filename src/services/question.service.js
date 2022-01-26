@@ -44,6 +44,12 @@ class QuestionService{
       async delete(questionId) {
         return await Question.findOne({ _id: questionId }).remove();
       }
+      async fetchQuestions(questionCategory,numberOfQuestions){
+          return await Question.aggregate([
+              { $match : { category : questionCategory }},
+              { $sample: { size: numberOfQuestions }}
+          ]).limit(numberOfQuestions);
+      }
 }
 
 module.exports = new QuestionService();
