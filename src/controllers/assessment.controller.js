@@ -33,8 +33,8 @@ class AssessmentController{
         const result = await UserAssessmentServ.prepareAssessment(req.params);
         res.status(201).send(response("User assessment prepared successfully.",result));
     }
-    async markAssessmentForUser(req,res){
-        const result = await UserAssessmentServ.markAssessment(req.params,req.body);
+    async evaluateAssessmentForUser(req,res){
+        const result = await UserAssessmentServ.evaluateAssessment(req.params,req.body);
         res.status(201).send(response("User assessment marked successfully.",result));
     }
 }

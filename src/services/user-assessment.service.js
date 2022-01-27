@@ -6,7 +6,7 @@ const CustomError = require("../utils/custom-error");
 class UserAssessmentService{
     async prepareAssessment(data){
 
-        const {userId, assessmentId} = data;
+        const { userId, assessmentId } = data;
 
         let assessmentQuestionCollection = [];
         let response = {};
@@ -42,7 +42,7 @@ class UserAssessmentService{
                     mark : 0
                 }
                 
-                // Saving user assessment
+                // Save user assessment
                 response = await new UserAssessment(userAssessment).save();
             }
             response =  await UserAssessment.findOne({user: userId, assessment: assessmentId})
@@ -52,7 +52,7 @@ class UserAssessmentService{
         return response;
     }
 
-    async markAssessment(data,submittedAssessment){
+    async evaluateAssessment(data,submittedAssessment){
         const { userId, assessmentId } = data;
         let totalMark = 0;
 
