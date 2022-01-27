@@ -20,9 +20,9 @@ const userAssessment = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "question"
         },
-        choice:{
+        choice:[{
             type: String,
-        },
+        }],
         isCorrect: {
             type: Boolean
         },
