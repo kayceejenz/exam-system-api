@@ -51,6 +51,65 @@ class UserAssessmentService{
 
         return response;
     }
+
+    async markAssessment(data,submittedAssessment){
+        const { userId, assessmentId } = data;
+        let totalMark = 0;
+
+        // Get user assessment
+        const userAssessment = await UserAssessment.findOne({user: userId, assessment: assessmentId}).populate("assessment assessmentScript.question");
+
+        // Loop through the submitted assessment and mark
+        for(let subAss of submittedAssessment){
+            let questionCtx = userAssessment.assessmentScript.find(({_id}) => _id == subAss._id);
+            
+            // Check answers and allocate mark
+           questionCtx.choice = subAss.choice;
+           questionCtx.isCorrect = await this.isCorrect(subAss,questionCtx);
+           questionCtx.markGotten = questionCtx.isCorrect ? userAssessment.assessment.markPerQuestion : 0;
+
+           // Sum to total mark
+           totalMark += questionCtx.markGotten;
+
+           // update the user assessment
+           const updateIndex = userAssessment.assessmentScript.findIndex(({_id}) => _id == subAss._id);
+           if(updateIndex !== -1){
+                userAssessment.assessmentScript[updateIndex] = questionCtx;
+           }
+        }
+
+        // update total mark of assessment and update
+        userAssessment.mark = totalMark;
+
+        await UserAssessment.findByIdAndUpdate(
+            { _id: userAssessment._id },
+            { $set: userAssessment},
+            { new: true }
+        );
+
+        // return user assessment
+        return await UserAssessment.findOne({user: userId, assessment: assessmentId})
+        .populate("user assessment assessmentScript.question", "-__v -createdAt -updatedAt -password");
+    }
+
+    async isCorrect(subAss, questionCtx){
+        let passStatus = false;
+
+        //check if the length of required answer is correct
+        if(subAss.choice.length === questionCtx.question.answer.length){
+
+            // loop through and ensure that all user choice are correct from the question answers
+            subAss.choice.forEach(element => {
+                if(!questionCtx.question.answer.includes(element)){
+                    return passStatus = false;
+                }
+                passStatus = true;
+            });
+        }
+        
+        return passStatus;
+    }
+
 }
 
 module.exports = new UserAssessmentService();
