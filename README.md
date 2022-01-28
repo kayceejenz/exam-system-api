@@ -297,7 +297,7 @@
 
 ### Submit Assessments For User [Post api/assessment/submit/:userId/:assessmentId]
 #### Header
-=<div class="highlight highligh-source-shell">
+<div class="highlight highligh-source-shell">
     <pre>Content-type: application/json</pre>
 </div>
 
@@ -319,5 +319,55 @@
                 },
                 choice: [String],
             }]
+    </pre>
+</div>
+
+#### Response
+<div class="highlight highligh-source-shell">
+    <pre>
+        {
+            _id: ObjectId,
+            user: {
+                 _id: ObjectId,
+                name: String,
+                email: String,
+                password: String,
+                role: String,
+                isActive: Boolean,
+                isVerified: Boolean
+            },
+            assessment: {
+                _id: ObjectId,
+                title: String,
+                description: String,
+                duration: Number,
+                numberOfQuestion: Number,
+                totalMark: Number,
+                markPerQuestion: Number,
+                dateTime: Date,
+                questionBank: [{
+                    _id: ObjectId,
+                    description: String
+                }]     
+            },
+            mark: Number,
+            assessmentScript: [{
+                question: {
+                    _id: ObjectId,
+                    category: {
+                        _id: ObjectId,
+                        description: String
+                    },
+                    type: String,
+                    instruction: String,
+                    text: String,
+                    options: [String],
+                    answer: [String]
+                },
+                choice: [String],
+                isCorrect: Boolean,
+                markGotten: Number
+            }]
+        }
     </pre>
 </div>
