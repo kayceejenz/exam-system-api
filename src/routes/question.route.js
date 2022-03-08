@@ -8,6 +8,4 @@ router.get("/:questionId",QuestionCtrl.getOne)
 router.put("/update/:questionId", QuestionCtrl.update);
 router.delete("/delete/:questionId", QuestionCtrl.delete);
 
-
-
 module.exports = router;
